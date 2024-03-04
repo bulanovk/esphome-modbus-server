@@ -37,10 +37,12 @@ void ModbusServer::set_de_pin(GPIOPin *de_pin) {
 void ModbusServer::set_address(uint8_t address) { mb.slave(address); }
 
 bool ModbusServer::add_holding_register(uint16_t start_address, uint16_t value, uint16_t numregs) {
+          ESP_LOGD(TAG, "add Holding register");
   return mb.addHreg(start_address, value, numregs);
 }
 
 bool ModbusServer::add_input_register(uint16_t start_address, uint16_t value, uint16_t numregs) {
+          ESP_LOGD(TAG, "add Input register");
   return mb.addIreg(start_address, value, numregs);
 }
 
