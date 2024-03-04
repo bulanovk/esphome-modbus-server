@@ -36,6 +36,17 @@ CONFIG_SCHEMA = (
                     }
                 )
             ),
+            cv.Optional("input_registers"): cv.ensure_list(
+                cv.Schema(
+                    {
+                        cv.Required(CONF_START_ADDRESS): cv.positive_int,
+                        cv.Optional(CONF_DEFAULT, 0): cv.positive_int,
+                        cv.Optional(CONF_NUMBER, 1): cv.positive_int,
+                        cv.Optional(CONF_ON_READ): cv.returning_lambda,
+                        cv.Optional(CONF_ON_WRITE): cv.returning_lambda,
+                    }
+                )
+            ),            
         }
     )
     .extend(uart.UART_DEVICE_SCHEMA)
@@ -94,6 +105,42 @@ async def to_code(config):
                 )
                 cg.add(
                     server.on_write_holding_register(
+                        reg[CONF_START_ADDRESS], template_, reg[CONF_NUMBER]
+                    )
+                )
+
+    if "input_registers" in config:
+        for reg in config["input_registers"]:
+            cg.add(
+                server.add_input_register(
+                    reg[CONF_START_ADDRESS], reg[CONF_DEFAULT], reg[CONF_NUMBER]
+                )
+            )
+            if CONF_ON_READ in reg:
+                template_ = await cg.process_lambda(
+                    reg[CONF_ON_READ],
+                    [
+                        (cg.uint16, "address"),
+                        (cg.uint16, "value"),
+                    ],
+                    return_type=cg.uint16,
+                )
+                cg.add(
+                    server.on_read_input_register(
+                        reg[CONF_START_ADDRESS], template_, reg[CONF_NUMBER]
+                    )
+                )
+            if CONF_ON_WRITE in reg:
+                template_ = await cg.process_lambda(
+                    reg[CONF_ON_WRITE],
+                    [
+                        (cg.uint16, "address"),
+                        (cg.uint16, "value"),
+                    ],
+                    return_type=cg.uint16,
+                )
+                cg.add(
+                    server.on_write_input_register(
                         reg[CONF_START_ADDRESS], template_, reg[CONF_NUMBER]
                     )
                 )
