@@ -100,7 +100,6 @@ void ModbusServer::flush() {
           de_pin_->digital_write(LOW);
 //          ESP_LOGV(TAG, "flush(): de_pin_ -> LOW");
     sending = false;
-    mb.readHreg()
   }
 }
 
