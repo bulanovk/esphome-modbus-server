@@ -100,10 +100,18 @@ void ModbusServer::flush() {
           de_pin_->digital_write(LOW);
 //          ESP_LOGV(TAG, "flush(): de_pin_ -> LOW");
     sending = false;
+    mb.readHreg()
   }
 }
 
 void ModbusServer::loop() { mb.task(); };
+
+
+void ModbusServer::set_discovery_address(uint16_t address)
+{
+  
+}
+
 }  // namespace modbus_server
 
 }  // namespace esphome
