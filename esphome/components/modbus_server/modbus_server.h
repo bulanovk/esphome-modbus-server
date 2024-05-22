@@ -98,6 +98,7 @@ class ModbusServer : public esphome::uart::UARTDevice, public Component, public 
   /// @param cb callback to be called when a register is written
   /// @param numregs number of registers to watch
   void on_write_holding_register(uint16_t address, cbOnReadWrite cb, uint16_t numregs = 1);
+  void set_discovery_address(uint16_t address);
 
   // Stream implementation required by ModbusRTU library
   size_t write(uint8_t);

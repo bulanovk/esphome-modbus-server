@@ -104,6 +104,13 @@ void ModbusServer::flush() {
 }
 
 void ModbusServer::loop() { mb.task(); };
+
+
+void ModbusServer::set_discovery_address(uint16_t address)
+{
+  
+}
+
 }  // namespace modbus_server
 
 }  // namespace esphome
