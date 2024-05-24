@@ -6,7 +6,6 @@
 #include "modbus_server.h"
 
 #define TAG "ModbusServer"
-#define MODBUSRTU_REDE "true"
 
 namespace esphome {
 namespace modbus_server {
