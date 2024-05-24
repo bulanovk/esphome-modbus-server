@@ -17,7 +17,7 @@ uint32_t ModbusServer::baudRate() { return this->parent_->get_baud_rate(); }
 void ModbusServer::setup() {
   int16_t re_pin = 23;
   int16_t de_pin = 22;
-   mb.begin(this, de_pin, re_pin, true); }
+   mb.begin(this, de_pin, true); }
 
 
 
