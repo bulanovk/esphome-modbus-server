@@ -59,7 +59,7 @@ CODEOWNERS = ["@jpeletier"]
 
 async def to_code(config):
 
-    cg.add_library("bulanovk/Modbus-Ecto", "5.0.0-RC11")
+    cg.add_library("bulanovk/Modbus-Ecto", "5.0.0-RC12")
     id = config[CONF_ID]
     uart = await cg.get_variable(config["uart_id"])
     server = cg.new_Pvariable(id)
