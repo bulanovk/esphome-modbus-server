@@ -81,15 +81,15 @@ void ModbusServer::on_write_input_register(uint16_t address, cbOnReadWrite cb, u
 
 // Stream class implementation:
 size_t ModbusServer::write(uint8_t data) {
-  if (((re_pin_ != nullptr) || (de_pin_ != nullptr)) && !sending) {
-    if (re_pin_ != nullptr)
-      re_pin_->digital_write(HIGH);
-    ESP_LOGV(TAG, "write(): re_pin_ -> HIGH");
-    if (de_pin_ != nullptr)
-      de_pin_->digital_write(HIGH);
-    ESP_LOGV(TAG, "write(): de_pin_ -> HIGH");
-    sending = true;
-  }
+  // if (((re_pin_ != nullptr) || (de_pin_ != nullptr)) && !sending) {
+  //   if (re_pin_ != nullptr)
+  //     re_pin_->digital_write(HIGH);
+  //   ESP_LOGV(TAG, "write(): re_pin_ -> HIGH");
+  //   if (de_pin_ != nullptr)
+  //     de_pin_->digital_write(HIGH);
+  //   ESP_LOGV(TAG, "write(): de_pin_ -> HIGH");
+  //   sending = true;
+  // }
   return uart::UARTDevice::write(data);
 }
 int ModbusServer::available() { return uart::UARTDevice::available(); }
@@ -97,15 +97,15 @@ int ModbusServer::read() { return uart::UARTDevice::read(); }
 int ModbusServer::peek() { return uart::UARTDevice::peek(); }
 void ModbusServer::flush() {
   uart::UARTDevice::flush();
-  if (((re_pin_ != nullptr) || (de_pin_ != nullptr)) && sending) {
-    if (re_pin_ != nullptr)
-      re_pin_->digital_write(LOW);
-    ESP_LOGV(TAG, "flush(): re_pin_ -> LOW");
-    if (de_pin_ != nullptr)
-      de_pin_->digital_write(LOW);
-    ESP_LOGV(TAG, "flush(): de_pin_ -> LOW");
-    sending = false;
-  }
+  // if (((re_pin_ != nullptr) || (de_pin_ != nullptr)) && sending) {
+  //   if (re_pin_ != nullptr)
+  //     re_pin_->digital_write(LOW);
+  //   ESP_LOGV(TAG, "flush(): re_pin_ -> LOW");
+  //   if (de_pin_ != nullptr)
+  //     de_pin_->digital_write(LOW);
+  //   ESP_LOGV(TAG, "flush(): de_pin_ -> LOW");
+  //   sending = false;
+  // }
 }
 
 void ModbusServer::loop() { mb.task(); };
